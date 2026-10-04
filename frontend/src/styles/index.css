@@ -1,0 +1,241 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/600.css";
+
+@theme {
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", "Inter Variable", system-ui, sans-serif;
+
+  /* Warm, quiet canvas */
+  --color-paper: #f5f3ee;
+  --color-surface: #ffffff;
+  --color-surface-2: #efece4;
+  --color-ink: #1e1c19;
+  --color-ink-soft: #4b463e;
+  --color-muted: #6f6a60;
+  --color-line: #e8e3d9;
+  --color-line-strong: #d7d0c2;
+
+  /* One warm, personal accent; green is reserved for completion */
+  --color-accent: #a9482a;
+  --color-accent-strong: #8d3a21;
+  --color-accent-soft: #f7ece6;
+
+  --color-done: #2f7d54;
+  --color-done-soft: #e9f3ec;
+
+  --color-danger: #b3261e;
+  --color-danger-soft: #fbeceb;
+
+  --shadow-xs: 0 1px 2px rgba(30, 28, 25, 0.05);
+  --shadow-sm: 0 1px 2px rgba(30, 28, 25, 0.05), 0 1px 3px rgba(30, 28, 25, 0.05);
+  --shadow-md: 0 18px 40px -26px rgba(30, 28, 25, 0.4);
+
+  --radius-xl: 0.85rem;
+  --radius-2xl: 1.1rem;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  html[lang="ar"] {
+    font-family: var(--font-arabic);
+  }
+
+  body {
+    @apply bg-paper text-ink antialiased;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  html[lang="ar"] body {
+    line-height: 1.85;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  html[lang="ar"] h1,
+  html[lang="ar"] h2,
+  html[lang="ar"] h3 {
+    line-height: 1.5;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  ::selection {
+    background: var(--color-accent-soft);
+  }
+
+  input,
+  textarea,
+  button,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+@layer components {
+  .surface {
+    @apply rounded-2xl border border-line bg-surface;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-surface;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .card-hover {
+    @apply transition duration-200;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-line-strong);
+    transform: translateY(-2px);
+  }
+
+  .btn {
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-xl px-4 text-sm font-medium transition duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white hover:bg-accent-strong;
+    box-shadow: var(--shadow-xs);
+  }
+
+  .btn-ghost {
+    @apply border border-line bg-surface text-ink hover:border-line-strong hover:bg-surface-2;
+  }
+
+  .btn-quiet {
+    @apply text-ink-soft hover:bg-surface-2 hover:text-ink;
+  }
+
+  .btn-sm {
+    @apply min-h-9 rounded-lg px-3 text-xs;
+  }
+
+  .icon-btn {
+    @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-muted transition duration-150 hover:bg-surface-2 hover:text-ink disabled:pointer-events-none disabled:opacity-25 disabled:hover:bg-transparent;
+  }
+
+  .icon-btn-sm {
+    @apply h-8 w-8 rounded-lg;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm transition-colors duration-150 placeholder:text-muted/70 focus:border-accent;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs font-medium text-ink-soft;
+  }
+
+  .link {
+    @apply text-accent underline-offset-4 transition-colors duration-150 hover:text-accent-strong hover:underline;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-muted;
+  }
+
+  .page-title {
+    @apply text-3xl font-semibold tracking-tight text-ink sm:text-4xl;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold tracking-tight text-ink;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-ink-soft;
+  }
+
+  .chip-accent {
+    @apply bg-accent-soft text-accent;
+  }
+
+  .chip-done {
+    @apply bg-done-soft text-done;
+  }
+
+  .icon-tile {
+    @apply grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-surface-2 text-ink-soft;
+  }
+
+  .badge {
+    @apply grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-surface-2 text-sm font-semibold tabular-nums text-ink-soft;
+  }
+
+  .empty {
+    @apply rounded-2xl border border-dashed border-line-strong px-6 py-10 text-center text-sm text-muted;
+  }
+
+  .divider {
+    @apply border-t border-line;
+  }
+}
+
+/* Arabic is never letterspaced — it breaks the script's connections */
+html[lang="ar"] .tracking-tight,
+html[lang="ar"] .section-title,
+html[lang="ar"] .eyebrow {
+  letter-spacing: 0;
+}
+
+html[lang="ar"] .eyebrow {
+  text-transform: none;
+}
+
+@keyframes ican-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter {
+  animation: ican-rise 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

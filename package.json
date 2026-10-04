@@ -1,0 +1,19 @@
+{
+  "name": "ican",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c blue,green \"npm:dev --workspace=backend\" \"npm:dev --workspace=frontend\"",
+    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
+    "start": "npm start --workspace=backend",
+    "typecheck": "tsc -p backend/tsconfig.json --noEmit && tsc -b frontend/tsconfig.json",
+    "test": "npm test --workspace=backend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
