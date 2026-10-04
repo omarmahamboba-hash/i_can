@@ -2,10 +2,27 @@ import Database from 'better-sqlite3'
 import path from 'node:path'
 import fs from 'node:fs'
 
-const dataDir = process.env.ICAN_DATA_DIR || path.join(process.cwd(), 'data')
-fs.mkdirSync(dataDir, { recursive: true })
+const dataDir = process.env.ICAN_DATA_DIR
+  ? path.resolve(process.env.ICAN_DATA_DIR)
+  : path.resolve(__dirname, '..', 'data')
 
-export const db = new Database(path.join(dataDir, 'ican.db'))
+try {
+  fs.mkdirSync(dataDir, { recursive: true })
+} catch (cause) {
+  throw new Error(
+    `Cannot create the data directory "${dataDir}". Point ICAN_DATA_DIR at a writable path ` +
+      `(on Render: mount a disk at /var/data and set ICAN_DATA_DIR=/var/data).`,
+    { cause },
+  )
+}
+
+export const db = (() => {
+  try {
+    return new Database(path.join(dataDir, 'ican.db'))
+  } catch (cause) {
+    throw new Error(`Cannot open the SQLite database in "${dataDir}". ${String(cause)}`, { cause })
+  }
+})()
 db.pragma('journal_mode = WAL')
 db.pragma('foreign_keys = ON')
 db.pragma('busy_timeout = 5000')

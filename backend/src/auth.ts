@@ -30,7 +30,10 @@ export function ensurePasswordInitialized(): void {
   if (getSetting('password_hash')) return
   const initial = process.env.ICAN_PASSWORD
   if (!initial && process.env.NODE_ENV === 'production') {
-    throw new Error('ICAN_PASSWORD must be set on first run in production.')
+    throw new Error(
+      'ICAN_PASSWORD must be set on first run in production. Set it in your host environment ' +
+        '(on Render: Environment > Environment Variables) and restart.',
+    )
   }
   if (!initial) {
     console.warn('[I CAN] ICAN_PASSWORD is not set — the default password "ican" is in use.')
